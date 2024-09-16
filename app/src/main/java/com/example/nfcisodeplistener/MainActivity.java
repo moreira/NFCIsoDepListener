@@ -1,5 +1,6 @@
 package com.example.nfcisodeplistener;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,7 +12,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements EMVListener {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements PixURIListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +27,20 @@ public class MainActivity extends AppCompatActivity implements EMVListener {
             return insets;
         });
 
-        EMVManager.getInstance().addOnNewEMVListener(this);
+        PixURIManager.getInstance().addOnNewPixURIListener(this);
     }
 
     @Override
-    public void onNewEMV(String emv) {
+    public void onNewPixURI(Uri pixURI) {
         new Handler(Looper.getMainLooper()).post(()->{
            TextView textView = findViewById(R.id.textView);
-           textView.setText(emv);
+            List<String> qr = pixURI.getQueryParameters("qr");
+            if(qr.size() != 1) {
+                textView.setText(R.string.qrcode_nao_encontrado);
+            }else{
+                textView.setText(qr.get(0));
+            }
+
         });
     }
 }

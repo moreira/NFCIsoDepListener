@@ -2,4 +2,5 @@
     <string name="app_name">NFCIsoDepListener</string>
     <string name="aid_group_desc">AID_F001020</string>
     <string name="service_desc">Recebe comando APDU</string>
+    <string name="qrcode_nao_encontrado">QRCode não encontrado</string>
 </resources>
