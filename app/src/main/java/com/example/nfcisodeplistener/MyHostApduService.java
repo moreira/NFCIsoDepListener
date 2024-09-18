@@ -7,9 +7,6 @@ import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.net.URI;
-import java.util.Arrays;
-
 public class MyHostApduService extends HostApduService {
 
     private static final String TAG = "APDUService";
@@ -23,17 +20,17 @@ public class MyHostApduService extends HostApduService {
         Log.d(TAG, "APDU recebido: " + BytesUtil.byteToHex(apdu));
 
         try{
-            APDUCommand parse = APDUCommand.parse(apdu);
-            Log.d(TAG, "APDU name:" + parse.getCommandName());
-            Log.d(TAG, "APDU sw1:" + parse.getSw1());
-            Log.d(TAG, "APDU sw2:" + parse.getSw2());
-            Log.d(TAG, "APDU declared length:" + parse.getDataLength());
-            Log.d(TAG, "APDU data length:" + parse.getData().length);
-            Log.d(TAG, "APDU data:" + BytesUtil.byteToHex(parse.getData()));
+            APDUCommand apduCommand = APDUCommand.parse(apdu);
+            Log.d(TAG, "APDU name:" + apduCommand.getCommandName());
+            Log.d(TAG, "APDU sw1:" + apduCommand.getSw1());
+            Log.d(TAG, "APDU sw2:" + apduCommand.getSw2());
+            Log.d(TAG, "APDU declared length:" + apduCommand.getDataLength());
+            Log.d(TAG, "APDU data length:" + apduCommand.getData().length);
+            Log.d(TAG, "APDU data:" + BytesUtil.byteToHex(apduCommand.getData()));
 
-            if(parse.isUpdateBinary()) {
+            if(apduCommand.isUpdateBinary()) {
 
-                NdefRecord ndefRecord = new NdefRecord(parse.getData());
+                NdefRecord ndefRecord = new NdefRecord(apduCommand.getData());
                 NdefRecordInfo ndefRecordInfo = new NdefRecordInfo(ndefRecord);
                 byte[] payload = ndefRecord.getPayload();
 

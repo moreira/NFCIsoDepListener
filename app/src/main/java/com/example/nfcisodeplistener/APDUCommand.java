@@ -17,6 +17,7 @@ public class APDUCommand {
     private int dataLength;
     private boolean isExtended;
     private byte[] data;
+    private byte le;
 
     private APDUCommand(){}
 
@@ -60,6 +61,8 @@ public class APDUCommand {
         int headerOffset = apduCommand.isExtended ? 7 : 5;
         apduCommand.data = Arrays.copyOfRange(apdu, headerOffset, apdu.length);
 
+        apduCommand.le = apdu[apdu.length-1];
+
         return apduCommand;
     }
 
@@ -89,6 +92,10 @@ public class APDUCommand {
 
     public byte[] getData() {
         return data;
+    }
+
+    public byte getLe() {
+        return le;
     }
 
     public boolean isUpdateBinary() {
