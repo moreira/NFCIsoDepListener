@@ -59,7 +59,7 @@ public class APDUCommand {
         }
 
         int headerOffset = apduCommand.isExtended ? 7 : 5;
-        apduCommand.data = Arrays.copyOfRange(apdu, headerOffset, apdu.length);
+        apduCommand.data = Arrays.copyOfRange(apdu, headerOffset, apdu.length-1);
 
         apduCommand.le = apdu[apdu.length-1];
 
