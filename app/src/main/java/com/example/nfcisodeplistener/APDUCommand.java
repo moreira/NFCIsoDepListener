@@ -17,7 +17,7 @@ public class APDUCommand {
     private int dataLength;
     private boolean isExtended;
     private byte[] data;
-    private byte le;
+    private Byte le;
 
     private APDUCommand(){}
 
@@ -59,9 +59,9 @@ public class APDUCommand {
         }
 
         int headerOffset = apduCommand.isExtended ? 7 : 5;
-        apduCommand.data = Arrays.copyOfRange(apdu, headerOffset, apdu.length-1);
+        apduCommand.data = Arrays.copyOfRange(apdu, headerOffset, headerOffset+apduCommand.dataLength);
 
-        apduCommand.le = apdu[apdu.length-1];
+        apduCommand.le = headerOffset+ apduCommand.dataLength == apdu.length ? null : apdu[apdu.length-1];
 
         return apduCommand;
     }
